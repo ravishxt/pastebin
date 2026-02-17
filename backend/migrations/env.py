@@ -7,6 +7,8 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool
 
 from app.db import Base
+# Import models so that Base.metadata is populated for Alembic's autogenerate
+from app.domain import models as _models  # noqa: F401
 
 
 config = context.config
