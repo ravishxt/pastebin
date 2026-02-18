@@ -1,0 +1,73 @@
+
+# -----------------------------------------------------------------------------
+# Python / Flask backend
+# -----------------------------------------------------------------------------
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+.env/
+
+# Environment variable files (keep example files tracked)
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+
+# Python tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pytype/
+.pyre/
+.cache/
+
+# Test / coverage artifacts
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+.nox/
+.tox/
+
+# Build / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Logs
+*.log
+
+# Local databases / runtime artifacts
+*.sqlite3
+*.db
+instance/
+
+# -----------------------------------------------------------------------------
+# IDE / OS
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+.idea/
+.vscode/
+*.code-workspace
+
+# -----------------------------------------------------------------------------
+# Secrets & local config (do not commit)
+# -----------------------------------------------------------------------------
+*.pem
+*.key
+*.crt
+
+
