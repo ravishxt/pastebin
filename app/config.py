@@ -16,7 +16,7 @@ class BaseConfig:
     # Database
     SQLALCHEMY_DATABASE_URI: str = os.getenv(
         "DATABASE_URL",
-        "postgresql+psycopg://evermile:password@localhost:5432/hookrelay",
+        None,
     )
     SQLALCHEMY_ECHO: bool = False
     SQLALCHEMY_FUTURE: bool = True
@@ -47,7 +47,7 @@ class TestingConfig(BaseConfig):
 
     SQLALCHEMY_DATABASE_URI: str = os.getenv(
         "TEST_DATABASE_URL",
-        "postgresql+psycopg://evermile:password@localhost:5432/hookrelay",
+        None,
     )
 
 

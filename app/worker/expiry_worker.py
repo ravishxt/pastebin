@@ -31,8 +31,7 @@ def _expiry_loop(app: Flask) -> NoReturn:
         while True:
             session = SessionLocal()
             try:
-                # If tables haven't been created yet (no migrations run), skip work
-                # instead of spamming errors.
+                # If tables haven't been created yet (no migrations run)
                 bind = session.get_bind()
                 inspector = inspect(bind)
                 if not inspector.has_table("pastes"):

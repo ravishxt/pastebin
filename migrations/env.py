@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import logging
 from logging.config import fileConfig
 
@@ -20,6 +21,8 @@ logger = logging.getLogger("alembic.env")
 
 target_metadata = Base.metadata
 
+database_url = os.getenv("DATABASE_URL")
+config.set_main_option("sqlalchemy.url", database_url)
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode."""
