@@ -16,7 +16,7 @@ class BaseConfig:
     # Database
     SQLALCHEMY_DATABASE_URI: str = os.getenv(
         "DATABASE_URL",
-        "postgresql+psycopg://postgres:postgres@localhost:5432/backend_db",
+        "postgresql+psycopg://evermile:password@localhost:5432/hookrelay",
     )
     SQLALCHEMY_ECHO: bool = False
     SQLALCHEMY_FUTURE: bool = True
@@ -34,7 +34,7 @@ class BaseConfig:
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False
 
 
 class ProductionConfig(BaseConfig):
@@ -47,7 +47,7 @@ class TestingConfig(BaseConfig):
 
     SQLALCHEMY_DATABASE_URI: str = os.getenv(
         "TEST_DATABASE_URL",
-        "postgresql+psycopg://postgres:postgres@localhost:5432/backend_test_db",
+        "postgresql+psycopg://evermile:password@localhost:5432/hookrelay",
     )
 
 

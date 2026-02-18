@@ -3,11 +3,13 @@ from __future__ import annotations
 import os
 
 from flask import Flask
+from flask_cors import CORS
 
 from .config import get_config
-from .db import init_db
+from .db import SessionLocal, init_db
 from .observability import init_observability
-
+from .api.pastes import api_bp
+from .worker.expiry_worker import start_expiry_worker
 
 def create_app(env_name: str | None = None) -> Flask:
     """
@@ -24,13 +26,21 @@ def create_app(env_name: str | None = None) -> Flask:
     app_config = get_config(env_name)
     app.config.from_object(app_config)
 
+
+    CORS(
+        app
+    )
+
     # Initialize infrastructure layers
     init_db(app)
     init_observability(app)
 
-    # Blueprint registration will live here once API modules are implemented.
-    # from .api import register_blueprints
-    # register_blueprints(app)
+    # Register API blueprints
+    app.register_blueprint(api_bp)
+
+    # Start background expiry worker (disabled in testing)
+    if not app.config.get("TESTING", False):
+        start_expiry_worker(app)
 
     return app
 

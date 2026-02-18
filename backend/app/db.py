@@ -12,7 +12,7 @@ Base = declarative_base()
 
 _engine: Engine | None = None
 SessionLocal: scoped_session = scoped_session(
-    sessionmaker(autocommit=False, autoflush=False)
+    sessionmaker(autocommit=False, autoflush=False, expire_on_commit=False)
 )
 
 
