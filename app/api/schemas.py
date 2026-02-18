@@ -16,9 +16,9 @@ class PasteCreateRequest(BaseModel):
         default=None,
         description="Optional expiration datetime (timezone-aware)",
     )
-    password_hash: Optional[str] = Field(
+    password: Optional[str] = Field(
         default=None,
-        description="Optional pre-hashed password protecting the paste",
+        description="Optional password protecting the paste",
     )
 
 

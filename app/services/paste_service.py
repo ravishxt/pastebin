@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from typing import Any, Optional
 
 from sqlalchemy.orm import Session
+from app.services.helpers import hash_password, verify_password
 
 from app.domain.models import Paste, PasteStatus
 from app.observability import get_correlation_id
@@ -74,7 +75,7 @@ class PasteService:
         content: str,
         max_views: int,
         expires_at: Optional[datetime] = None,
-        password_hash: Optional[str] = None,
+        password: Optional[str] = None,
     ) -> dict[str, Any]:
         """
         Create a new paste enforcing business rules:
@@ -130,6 +131,10 @@ class PasteService:
                     },
                 )
                 raise InvalidPasteParameters("expires_at must be in the future.")
+
+        password_hash = None
+        if password:
+            password_hash = hash_password(password)
 
         session = self.session_factory()
         try:
@@ -205,6 +210,7 @@ class PasteService:
         paste_id: uuid.UUID,
         *,
         ip_address: Optional[str] = None,
+        provided_password: Optional[str] = None,
     ) -> dict[str, Any]:
         """
         Retrieve a paste for viewing, enforcing view and expiry rules.
@@ -235,6 +241,14 @@ class PasteService:
             paste = paste_repo.get_paste_by_id(paste_id)
             if paste is None:
                 raise PasteNotFoundError(f"Paste with id {paste_id} not found.")
+
+            # 🔒 Password validation
+            if paste.password_hash:
+                if not provided_password:
+                    raise PermissionError("Password required")
+
+                if not verify_password(provided_password, paste.password_hash):
+                    raise PermissionError("Invalid password")
 
             now_utc = datetime.now(timezone.utc)
 
