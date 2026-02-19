@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import Optional
 
 from sqlalchemy import Select, Update, select, update
@@ -149,7 +149,7 @@ class AccessLogRepository:
             paste_id=paste_id,
             ip_address=ip_address,
             success=success,
-            accessed_at=accessed_at or datetime.utcnow(),
+            accessed_at=accessed_at or datetime.now(UTC),
         )
         self._session.add(log)
         self._session.flush()
